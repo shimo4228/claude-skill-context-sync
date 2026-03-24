@@ -2,6 +2,12 @@
 
 Audit and fix project documentation role overlaps. One command to keep all your context files healthy.
 
+## Why This Matters
+
+In LLM-driven development, organizing concepts _is_ implementation. Markdown carries the same weight as executable code — a stale number in CLAUDE.md, a misplaced design rationale in README, or a contradictory module count silently degrades every AI-assisted session that reads it. The agent works from what the documents say, not from what the code is.
+
+Context consistency is not a housekeeping task. It is a prerequisite for the core concepts to reach the system without noise. This skill mechanically guarantees that consistency — freeing the human to focus on creating and refining the concepts themselves.
+
 ## The Problem
 
 As projects grow, documentation sprawls across multiple files with overlapping responsibilities:

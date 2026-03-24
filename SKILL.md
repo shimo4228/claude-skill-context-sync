@@ -8,6 +8,10 @@ origin: ECC
 
 Detect and fix documentation role overlaps, stale content, and missing context files across your project. Ensures every piece of project knowledge lives in exactly one place with a clear purpose.
 
+## Why This Matters
+
+In LLM-driven development, organizing concepts _is_ implementation. Markdown carries the same weight as executable code — a stale number in CLAUDE.md or a misplaced design rationale silently degrades every AI-assisted session that reads it. Context consistency is not housekeeping; it is a prerequisite for core concepts to reach the system without noise.
+
 ## When to Use
 
 - After a major refactoring or architecture change
