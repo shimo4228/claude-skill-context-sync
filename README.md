@@ -60,6 +60,30 @@ cp SKILL.md ~/.claude/skills/context-sync/
 
 Then invoke with `/context-sync` in Claude Code.
 
+## Recommended: Post-Commit Freshness Check
+
+Run Phase 4 (Freshness Check) automatically after each commit to catch stale documentation early. Add to your Claude Code hooks in `settings.json`:
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CC_BASH_COMMAND\" | grep -q 'git commit'; then echo '[context-sync] Consider running /context-sync to check freshness after this commit.'; fi"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+For a full audit (all 5 phases), run `/context-sync` manually after major refactors, dependency changes, or milestone completions.
+
 ## Part of the Agent Knowledge Cycle (AKC)
 
 This skill is the **Maintain** phase of [AKC](https://github.com/shimo4228/agent-knowledge-cycle) — a cyclic self-improvement architecture for AI coding agents.
