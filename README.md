@@ -60,18 +60,9 @@ cp SKILL.md ~/.claude/skills/context-sync/
 
 Then invoke with `/context-sync` in Claude Code.
 
-## Part of the AI Agent Knowledge Lifecycle
+## Part of the Agent Knowledge Cycle (AKC)
 
-This skill complements the [ECC](https://github.com/affaan-m/everything-claude-code) ecosystem:
-
-- **context-sync** — Documentation role audit (this skill)
-- [context-budget](https://github.com/affaan-m/everything-claude-code) — Token consumption audit
-- [verification-loop](https://github.com/affaan-m/everything-claude-code) — Code quality verification
-- [architecture-decision-records](https://github.com/affaan-m/everything-claude-code) — ADR creation and lifecycle
-
-## ECC Contribution
-
-Submitted as [PR #827](https://github.com/affaan-m/everything-claude-code/pull/827) to Everything Claude Code.
+This skill is the **Maintain** phase of [AKC](https://github.com/shimo4228/agent-knowledge-cycle) — a cyclic self-improvement architecture for AI coding agents.
 
 ## License
 
