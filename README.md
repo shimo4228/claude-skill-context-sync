@@ -62,6 +62,20 @@ Every action requires user confirmation. Nothing is auto-modified.
 - Correctly identified project was already healthy
 - Only action: created missing ADR index + fixed stale test count
 
+## Recommended Workflow
+
+### Solo developer
+
+Run after milestones — feature complete, refactor done, architecture change. Not every commit; that's too frequent. A good trigger is "I just changed how something works, not just what it does."
+
+### Team / PR workflow
+
+Run as part of PR review, **before merge**. This catches doc drift introduced by the PR itself — a renamed module, a new pipeline stage, a changed threshold. Post-merge requires a follow-up PR just for doc fixes, which adds noise and often gets skipped.
+
+### Scheduled hygiene
+
+Monthly or per-sprint as a health check. Catches gradual drift that no single PR introduced — stale test counts, module counts that crept up, ADRs that were never created for decisions made in Slack.
+
 ## Installation
 
 Copy `SKILL.md` to your Claude Code skills directory:
