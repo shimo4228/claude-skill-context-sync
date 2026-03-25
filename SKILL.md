@@ -8,10 +8,6 @@ origin: ECC
 
 Detect and fix documentation role overlaps, stale content, and missing context files across your project. Ensures every piece of project knowledge lives in exactly one place with a clear purpose.
 
-## Why This Matters
-
-In LLM-driven development, organizing concepts _is_ implementation. Markdown carries the same weight as executable code — a stale number in CLAUDE.md or a misplaced design rationale silently degrades every AI-assisted session that reads it. Context consistency is not housekeeping; it is a prerequisite for core concepts to reach the system without noise.
-
 ## When to Use
 
 - After a major refactoring or architecture change
@@ -21,26 +17,37 @@ In LLM-driven development, organizing concepts _is_ implementation. Markdown car
 - When design decisions are buried in context files instead of formal records
 - Periodically (monthly or per milestone) as documentation hygiene
 
-## Core Concept: Four Documentation Roles
+## Core Concept: Five Documentation Roles
 
-Every project document should serve exactly one of these four roles. Overlap causes drift and contradiction.
+Every project document should serve exactly one of these roles. Overlap causes drift and contradiction.
 
 | Role | Purpose | What belongs here | Examples |
 |------|---------|-------------------|---------|
 | **Context** | How to work in this project | Conventions, build/test commands, policies | CLAUDE.md, .cursorrules, AGENTS.md |
-| **Architecture** | What the code looks like now | Module structure, data flow, dependencies | docs/CODEMAPS/, docs/architecture/ |
+| **Specification** | How the system works | Design, data structures, pipelines, security model | docs/spec/ |
+| **Architecture** | Where things are in the code | Module index, file→function mapping, line numbers | docs/CODEMAPS/, docs/architecture/ |
 | **Decisions** | Why the code is this way | Trade-offs, rejected alternatives, rationale | docs/adr/ |
 | **External** | What this project is | Purpose, quickstart, API overview | README.md |
+
+### Specification vs Architecture
+
+Specification and Architecture are complementary, not overlapping:
+- **Specification** answers "what does this system do and how is it designed?" — readable by researchers and AI alike, focuses on concepts, data flow, and design choices
+- **Architecture** answers "where is that implemented?" — code-level index with file paths, function names, and line numbers for navigation
+
+When both exist, Architecture docs should point to Specification for design details rather than duplicating them.
 
 ### Common Anti-Patterns
 
 | Symptom | Problem | Fix |
 |---------|---------|-----|
-| CLAUDE.md is 500+ lines | Architecture detail in context file | Move structure/module lists to Architecture docs |
+| CLAUDE.md is 500+ lines | Architecture detail in context file | Move structure/module lists to Specification or Architecture docs |
 | CLAUDE.md has "we chose X because Y" | Decision record in context file | Extract to ADR |
-| README explains internal implementation | Internal detail in external doc | Move to Architecture docs |
+| README explains internal implementation | Internal detail in external doc | Move to Specification |
 | Multiple files describe the same structure | Contradictory duplication | Single source of truth + pointers |
 | No ADR directory | Decisions live nowhere or in context file | Create docs/adr/ and migrate |
+| Architecture docs explain design/pipelines | Design detail in code index | Move to Specification, keep Architecture as code reference |
+| Data schemas duplicated in 3+ files | Schema drift across docs | Canonical schema in Specification, others reference it |
 
 ## Workflow
 
@@ -55,6 +62,9 @@ Scan the project for documentation files and classify them into the four roles.
 Context files:
 - CLAUDE.md, .cursorrules, .windsurfrules
 - AGENTS.md, .github/copilot-instructions.md
+
+Specification docs:
+- docs/spec/, docs/specification/
 
 Architecture docs:
 - docs/CODEMAPS/, docs/architecture/, docs/design/
@@ -85,22 +95,31 @@ Read each documentation file and detect content that belongs in a different role
 Context file contains...          → Should move to...
 ─────────────────────────────────────────────────────
 Module/file listings (>10 items)  → Architecture docs
-Dependency graphs or data flows   → Architecture docs
+Dependency graphs or data flows   → Specification
 "We chose X because Y"           → Decision record (ADR)
 "Alternative was Z but..."        → Decision record (ADR)
-Internal API details              → Architecture docs
+Internal API details              → Specification
 ─────────────────────────────────────────────────────
 
 README contains...                → Should move to...
 ─────────────────────────────────────────────────────
-Internal module structure         → Architecture docs
-Implementation details            → Architecture docs
+Internal module structure         → Specification or Architecture docs
+Implementation details            → Specification
 Design rationale                  → Decision record (ADR)
 ─────────────────────────────────────────────────────
 
 Architecture docs contain...      → Should move to...
 ─────────────────────────────────────────────────────
 "We decided to..."                → Decision record (ADR)
+Build/test commands               → Context file
+Design explanations, data schemas → Specification
+Pipeline descriptions             → Specification
+─────────────────────────────────────────────────────
+
+Specification contains...         → Should move to...
+─────────────────────────────────────────────────────
+File paths, line numbers          → Architecture docs
+"We chose X because Y"           → Decision record (ADR)
 Build/test commands               → Context file
 ─────────────────────────────────────────────────────
 ```
